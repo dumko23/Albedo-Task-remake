@@ -1,0 +1,8 @@
+/mysql
+
+/vendor
+
+.idea
+/.env
+/www/vendor/
+/logs/

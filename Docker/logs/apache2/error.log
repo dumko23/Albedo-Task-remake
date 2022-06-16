@@ -1,0 +1,56 @@
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.18.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 07:22:44.630687 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 07:22:44.632230 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 12:35:22.649224 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00112: Warning: DocumentRoot [/var/www/html/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 12:39:24.562604 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 12:39:24.565271 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 12:39:55.265624 2022] [core:error] [pid 18] [client 172.20.0.1:48790] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:39:55.505109 2022] [core:error] [pid 19] [client 172.20.0.1:48786] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:22.292301 2022] [core:error] [pid 20] [client 172.20.0.1:48798] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:22.465146 2022] [core:error] [pid 21] [client 172.20.0.1:48794] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:35.217012 2022] [core:error] [pid 22] [client 172.20.0.1:48802] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:35.355083 2022] [core:error] [pid 18] [client 172.20.0.1:48806] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:37.673495 2022] [core:error] [pid 19] [client 172.20.0.1:48812] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:37.827542 2022] [core:error] [pid 20] [client 172.20.0.1:48814] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:41.652463 2022] [core:error] [pid 21] [client 172.20.0.1:48822] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:41:41.761271 2022] [core:error] [pid 22] [client 172.20.0.1:48820] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 12:42:11.146465 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.21.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 12:42:29.453585 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 12:42:29.454534 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 12:42:51.939440 2022] [autoindex:error] [pid 17] [client 172.21.0.1:48830] AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive, referer: http://localhost/
+[Tue Jun 14 12:42:52.056253 2022] [php:error] [pid 17] [client 172.21.0.1:48830] script '/var/www/html/index.php' not found or unable to stat, referer: http://localhost/
+[Tue Jun 14 12:42:53.012507 2022] [autoindex:error] [pid 17] [client 172.21.0.1:48830] AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive, referer: http://localhost/
+[Tue Jun 14 12:42:53.592044 2022] [autoindex:error] [pid 17] [client 172.21.0.1:48830] AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive, referer: http://localhost/
+[Tue Jun 14 12:42:54.106716 2022] [autoindex:error] [pid 17] [client 172.21.0.1:48830] AH01276: Cannot serve directory /var/www/html/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive, referer: http://localhost/
+[Tue Jun 14 12:44:26.355823 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.22.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 12:45:05.014136 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 12:45:05.015007 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 13:16:37.353950 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00112: Warning: DocumentRoot [/var/www/html/source/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.23.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 13:16:57.747931 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 13:16:57.749003 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 13:17:05.505823 2022] [core:error] [pid 18] [client 172.23.0.1:49354] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 13:17:06.666620 2022] [core:error] [pid 19] [client 172.23.0.1:49356] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 13:17:20.139177 2022] [core:error] [pid 20] [client 172.23.0.1:49360] AH00124: Request exceeded the limit of 10 internal redirects due to probable configuration error. Use 'LimitInternalRecursion' to increase the limit if necessary. Use 'LogLevel debug' to get a backtrace., referer: http://localhost/
+[Tue Jun 14 13:17:41.890332 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.24.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 13:17:56.762866 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 13:17:56.764385 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 13:17:59.176448 2022] [autoindex:error] [pid 17] [client 172.24.0.1:49372] AH01276: Cannot serve directory /var/www/html/source/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive, referer: http://localhost/
+[Tue Jun 14 13:18:00.206157 2022] [autoindex:error] [pid 17] [client 172.24.0.1:49372] AH01276: Cannot serve directory /var/www/html/source/: No matching DirectoryIndex (index.php,index.html) found, and server-generated directory index forbidden by Options directive, referer: http://localhost/
+[Tue Jun 14 13:18:14.740187 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.25.0.3. Set the 'ServerName' directive globally to suppress this message
+[Tue Jun 14 13:18:31.977088 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Tue Jun 14 13:18:31.977932 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Tue Jun 14 15:26:20.273560 2022] [mpm_prefork:notice] [pid 1] AH00170: caught SIGWINCH, shutting down gracefully
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.18.0.3. Set the 'ServerName' directive globally to suppress this message
+[Wed Jun 15 06:49:39.166638 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Wed Jun 15 06:49:39.168163 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.18.0.3. Set the 'ServerName' directive globally to suppress this message
+[Thu Jun 16 06:51:22.775350 2022] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.38 (Debian) PHP/8.1.7 configured -- resuming normal operations
+[Thu Jun 16 06:51:22.786265 2022] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'

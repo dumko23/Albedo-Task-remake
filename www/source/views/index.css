@@ -1,0 +1,175 @@
+/*
+will be moved to styles folder later
+ */
+html{
+    font-family: 'Gentium Plus', serif;
+    background-color: azure;
+}
+
+#regForm {
+    background-color: #ffffff;
+    margin: 50px auto 20px;
+    padding: 40px;
+    width: 70%;
+    min-width: 300px;
+    border: 1px solid grey;
+}
+
+input, textarea {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: Raleway, serif;
+    border: 1px solid #aaaaaa;
+    box-sizing: border-box;
+}
+
+input.invalid {
+    background-color: #ffdddd;
+}
+
+.tab {
+    display: none;
+}
+
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step.finish {
+    background-color: #04AA6D;
+}
+
+.members-link{
+    margin: 10px auto;
+    padding: 10px;
+    width: 70%;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    padding: 0.5rem 1rem;
+    background-color: #04AA6D;
+    margin-bottom: 2rem;
+}
+a:hover{
+    background-color: darkcyan;
+}
+
+.memberList{
+    margin-top: 2rem;
+}
+
+.member-table{
+    border: 1px solid black;
+    margin: 5px auto;
+    width: 70%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid rgb(200,200,200);
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+td, th {
+    border: 1px solid rgb(190,190,190);
+    padding: 10px 20px;
+}
+
+th {
+    background-color: rgb(235,235,235);
+}
+
+td {
+    text-align: center;
+}
+
+.descr{
+    width: 25%;
+}
+
+img{
+    width: 300px;
+    height: auto;
+}
+
+.error{
+    display: inline-block;
+    color: red;
+    margin: 0.5rem;
+}
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.finishAnchor{
+    margin: 0 auto 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.country{
+    width: 100%;
+}
+
+.required{
+    color: red;
+}
+button{
+    padding: 0.5rem 1rem;
+    background-color: #55ACEE;
+    border: none;
+}
+button:hover{
+    background-color: #3B5998;
+    cursor: pointer;
+}
