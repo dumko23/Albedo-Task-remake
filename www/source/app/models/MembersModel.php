@@ -3,8 +3,9 @@
 namespace App\app\models;
 
 use App\core\Application;
+use App\core\Model;
 
-class Model
+class MembersModel extends Model
 {
     protected function validateInput($config, $record): string
     {
@@ -29,6 +30,8 @@ class Model
             $errors['date'] = 'Input is empty!';
         } else if (strlen($record['date']) > 255) {
             $errors['date'] = 'Your input is too long';
+        } else if(strtotime($record['date']) > strtotime(2005-01-01)){
+            $errors['date'] = 'Incorrect date value!';
         }
 
         if ($record['subject'] === '') {
@@ -73,7 +76,6 @@ class Model
             if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
                 $errors['email'] = 'Incorrect email format!';
             } else {
-                echo $record['email'];
                 if (isset(Application::get('database')->searchMemberInDB(
                         'memberId',
                         $config['database']['dbAndTable'],
@@ -86,7 +88,6 @@ class Model
         }
 
         if (count($errors) === 0) {
-            echo 1;
             return true;
         } else {
             $result = json_encode($errors);
@@ -101,21 +102,18 @@ class Model
         $data = $member;
         $validateResult = $this->validateInput($config, $data);
         if ($validateResult === "1") {
-            Application::get('database')->insertMemberToDB(
-                Application::get('config')['database']['dbAndTable'],
-                $data
-            );
+            $this->addMember($data);
         } else {
             return $validateResult;
         }
         return true;
     }
 
-    protected function updateMemberRecord($data, $uploadFile, $basename): bool|array
+    protected function updateMemberRecord($config, $data, $uploadFile, $basename): bool|array
     {
         $searchedId = Application::get('database')->searchMemberInDB(
             'memberId',
-            Application::get('config')['database']['dbAndTable'],
+            $config['database']['dbAndTable'],
             'where email = ',
             $data['email']
         );
@@ -132,13 +130,10 @@ class Model
             if (!$basename) {
                 $uploadFile = '';
             }
-            Application::get('database')->update(
-                Application::get('config')['database']['dbAndTable'],
-                $data,
+            $data['photo'] = $uploadFile;
+            $this->updateMember($data,
                 'email',
-                $data['email'],
-                $uploadFile
-            );
+                $data['email']);
             return true;
         }
         return $searchedId;

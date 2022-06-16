@@ -39,16 +39,17 @@ class QueryBuilder
         return $this->getMembersFromDB($selectString, $dbAndTable, $where, $searchItem);
     }
 
-    protected function update($dbAndTable, $data, $where, $searchItem, $photo): void
+    public function update($dbAndTable, $data, $where, $searchItem): void
     {
+        echo implode(' = ?, ', array_keys($data)) . ' = ?, photo = ?';
         $sql = sprintf('update %s set %s  where %s = %s',
             $dbAndTable,
-            implode(' = ?, ', array_keys($data)) . 'photo = ?',
+            implode(' = ?, ', array_keys($data)) . ' = ?, photo = ?',
             $where,
             $searchItem
         );
         $statement = $this->pdo->prepare($sql);
-        $statement->execute([array_values($data)], $photo);
+        $statement->execute([array_values($data)]);
     }
 
 }

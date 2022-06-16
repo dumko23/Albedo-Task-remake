@@ -2,9 +2,9 @@
 
 namespace App\app\views;
 
+use App\core\View;
 
-
-class View
+class MembersView extends View
 {
     public function showMembers($membersList): void
     {
@@ -32,9 +32,5 @@ class View
             </table>
             ";
         }
-    }
-
-    public function showView($view){
-        return require $view;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\views\handlers;
 
+use App\core\Application;
+
 $data = $_POST['data'];
 
 $uploadDir = 'uploads/';
@@ -16,5 +18,5 @@ if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
 }
 echo '</pre>';
 
-$this->model->updateAdditionalInfo($this->getConfig(), $data, $uploadFile, $basename);
+Application::get('membersModel')->updateAdditionalInfo(Application::get('config'), $data, $uploadFile, $basename);
 

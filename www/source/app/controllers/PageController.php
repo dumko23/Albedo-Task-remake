@@ -2,7 +2,7 @@
 
 namespace App\app\controllers;
 
-class Controller
+class PageController
 {
     public function main(): string
     {

@@ -8,7 +8,7 @@ $data = $_POST["data"];
 
 
 
-$result = Application::get('model')
+$result = Application::get('membersModel')
     ->registerNewMember(
         Application::get('config'),
         $data

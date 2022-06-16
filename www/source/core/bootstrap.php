@@ -2,10 +2,10 @@
 
 namespace App\core;
 
-use App\app\controllers\Controller;
+use App\app\controllers\PageController;
 use App\app\controllers\HandleController;
-use App\app\models\Model;
-use App\app\views\View;
+use App\app\models\MembersModel;
+use App\app\views\MembersView;
 use App\core\database\PDOClass;
 use App\core\database\QueryBuilder;
 
@@ -16,9 +16,9 @@ Application::bind('database', new QueryBuilder(
         )
     )
 );
-Application::bind('views', new View());
-Application::bind('model', new Model());
+Application::bind('views', new MembersView());
+Application::bind('membersModel', new MembersModel());
 Application::bind('router', new Router());
 Application::bind('request', new Request());
-Application::bind('controller', new Controller());
+Application::bind('pageController', new PageController());
 Application::bind('handleController', new HandleController());
