@@ -2,15 +2,17 @@
 
 namespace App\app\controllers;
 
-class HandleController
+use App\core\Controller;
+
+class HandleController extends Controller
 {
     public function send(): string
     {
-        return 'source/views/handlers/handlerSend.php';
+        return $this->returnHandlerPath('send');
     }
 
     public function update(): string
     {
-        return 'source/views/handlers/handlerUpdate.php';
+        return $this->returnHandlerPath('update');
     }
 }

@@ -2,25 +2,28 @@
 
 namespace App\app\controllers;
 
-class PageController
+use App\core\Application;
+use App\core\Controller;
+
+class PageController extends Controller
 {
     public function main(): string
     {
-        return  'source/views/pages/main.php';
+        return $this->returnPagePath('main');
     }
 
     public function members(): string
     {
-        return  'source/views/pages/members.php';
+        return $this->returnPagePath('members');
     }
 
-    public function getMembersCount(): string
+    public function membersCount(): string
     {
-        return 'source/views/pages/membersCount.php';
+        return $this->returnPagePath('membersCount');
     }
 
-    public function get404(): string
+    public function page404(): string
     {
-        return  'source/views/pages/_404.php';
+        return $this->returnPagePath('page404');
     }
 }
