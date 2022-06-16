@@ -9,7 +9,13 @@ include('source/views/layouts/header.php')
 <a href="/">Back to Register Form</a>
 <div class="memberList">
     <?php
-    Application::get('view')->showMembers(Application::get('database')->getMembersFromDB());
+    Application::get('views')
+        ->showMembers(Application::get('database')
+            ->getMembersFromDB(
+                    'photo, firstName, lastName, email, subject',
+                    Application::get('config')['database']['dbAndTable']
+            )
+        );
     ?>
 </div>
 

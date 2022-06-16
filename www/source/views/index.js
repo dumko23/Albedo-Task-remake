@@ -51,7 +51,6 @@ async function nextPrev(n, result = true) {
             x[currentTab].style.display = "none";
         }
     }
-    console.log('this', currentTab)
     currentTab = currentTab + 1;
     sessionStorage.setItem('currentTab', currentTab.toString());
     if (+sessionStorage.getItem('currentTab') === 2) {

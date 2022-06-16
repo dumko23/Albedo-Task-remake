@@ -1,11 +1,18 @@
 <?php
 
-namespace App;
+namespace App\views\handlers;
+
+use App\core\Application;
 
 $data = $_POST["data"];
 
 
-$result = $this->model->registerNewMember($this->getConfig(), $data);
+
+$result = Application::get('model')
+    ->registerNewMember(
+        Application::get('config'),
+        $data
+    );
 
 
 echo $result;

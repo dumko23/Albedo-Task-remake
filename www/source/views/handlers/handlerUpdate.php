@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\views\handlers;
 
 $data = $_POST['data'];
 

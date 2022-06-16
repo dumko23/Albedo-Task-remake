@@ -47,9 +47,9 @@ class Router
             throw new Exception("{$controller} does not respond to the {$action} action");
         }
         if($action === 'send' || $action === 'update'){
-            return Application::get($controller)->$action();
+            return require Application::get($controller)->$action();
         }
         $result = Application::get($controller)->$action();
-        return Application::get('view')->showView($result);
+        return Application::get('views')->showView($result);
     }
 }

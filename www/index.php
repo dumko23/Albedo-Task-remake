@@ -5,7 +5,6 @@ use App\core\Application;
 require __DIR__ . '/vendor/autoload.php';
 require 'source/core/bootstrap.php';
 
-$members = Application::get('database')->getMembersFromDB();
 
 Application::get('router')
     ->callAction(...Application::get('router')

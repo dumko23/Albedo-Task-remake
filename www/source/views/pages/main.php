@@ -17,7 +17,7 @@ include('source/views/layouts/header.php');
         <p><label>First name<span class="required">*</span>:
                 <input id="firstNameIsValid" name="data[firstName]" placeholder="First name..."
                        pattern="^([\u00C0-\u017Fa-zA-Z]{2,}(?:[-]?[\u00C0-\u017Fa-zA-Z]{2,}))$"
-                       maxlength="30" required>
+                       maxlength="30" onkeypress="noDigits(event)" required>
             </label>
             <span>Only latin alphabet and '`- symbols allowed </span>
             <span class="error" id="firstNameError"></span>
@@ -25,7 +25,7 @@ include('source/views/layouts/header.php');
         <p><label>Last name<span class="required">*</span>:
                 <input id="lastNameIsValid" name="data[lastName]" placeholder="Last name..."
                        pattern="^([\u00C0-\u017Fa-zA-Z]{2,}(?:[-]?[\u00C0-\u017Fa-zA-Z]{2,}))$"
-                       maxlength="30" required>
+                       maxlength="30" onkeypress="noDigits(event)" required>
             </label>
             <span>Only latin alphabet (including accented characters) and '`- symbols allowed </span>
             <span class="error" id="lastNameError"></span>
@@ -204,7 +204,6 @@ include('source/views/layouts/header.php');
     }
 
     function getCount(){
-        console.log(1);
         $.get( "get", function( data ) {
             $( "#membersCount" ).html( data );
         });
@@ -228,7 +227,6 @@ include('source/views/layouts/header.php');
 
     let inputFirstName = document.getElementById('firstNameIsValid');
     inputFirstName.oninvalid = function(event) {
-        console.log('oh')
         event.target.setCustomValidity("First Name should contain latin letters or '`- symbols and be maximum 30 symbols long.");
     }
     inputFirstName.oninput = function (event) {
@@ -264,6 +262,10 @@ include('source/views/layouts/header.php');
         $("#phoneIsValid").mask("+0 (000) 000-0000");
     });
 
+    function noDigits(event) {
+        if ("1234567890".indexOf(event.key) !== -1)
+            event.preventDefault();
+    }
 
 </script>
 </body>

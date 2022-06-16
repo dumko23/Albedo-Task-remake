@@ -6,6 +6,7 @@ use PDO;
 
 return [
     'database' => [
+        'dbAndTable' => "MemberList.Members",
         'user' => 'root',
         'password' => 'password',
         'name' => 'mysql:host=mysql;port:3306;',
