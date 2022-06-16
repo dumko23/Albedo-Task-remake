@@ -8,11 +8,11 @@ class HandleController extends Controller
 {
     public function send(): string
     {
-        return $this->returnHandlerPath('send');
+        return $this->returnHandlerPath('handlerSend');
     }
 
     public function update(): string
     {
-        return $this->returnHandlerPath('update');
+        return $this->returnHandlerPath('handlerUpdate');
     }
 }
