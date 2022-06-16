@@ -114,7 +114,7 @@ class MembersModel extends Model
         $searchedId = Application::get('database')->searchMemberInDB(
             'memberId',
             $config['database']['dbAndTable'],
-            'where email = ',
+            'where email=',
             $data['email']
         );
         if ($searchedId) {

@@ -41,15 +41,15 @@ class QueryBuilder
 
     public function update($dbAndTable, $data, $where, $searchItem): void
     {
-        echo implode(' = ?, ', array_keys($data)) . ' = ?, photo = ?';
+        $searchItem = "'$searchItem'";
         $sql = sprintf('update %s set %s  where %s = %s',
             $dbAndTable,
-            implode(' = ?, ', array_keys($data)) . ' = ?, photo = ?',
+            implode(' = ?, ', array_keys($data)) . ' = ?',
             $where,
             $searchItem
         );
         $statement = $this->pdo->prepare($sql);
-        $statement->execute([array_values($data)]);
+        $statement->execute(array_values($data));
     }
 
 }
