@@ -278,6 +278,14 @@ include('source/views/layouts/header.php');
         event.target.setCustomValidity('');
     }
 
+    let inputDate = document.getElementById('dateIsValid');
+    inputDate.oninvalid = function(event) {
+        event.target.setCustomValidity("Maximum available date is 01-01-2005");
+    }
+    inputNumber.oninput = function (event) {
+        event.target.setCustomValidity('');
+    }
+
     $(function(){
 
         $("#phoneIsValid").mask("+0 (000) 000-0000");
