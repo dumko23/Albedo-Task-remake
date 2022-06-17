@@ -282,7 +282,7 @@ include('source/views/layouts/header.php');
     inputDate.oninvalid = function(event) {
         event.target.setCustomValidity("Maximum available date is 01-01-2005");
     }
-    inputNumber.oninput = function (event) {
+    inputDate.oninput = function (event) {
         event.target.setCustomValidity('');
     }
 
