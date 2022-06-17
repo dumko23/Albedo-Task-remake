@@ -13,20 +13,20 @@ include('source/views/layouts/header.php');
         <h3>Step 1</h3>
         <h3>Personal Info:</h3>
         <p><span class="required">*</span> - Required</p>
-        <p><label>First name<span class="required">*</span>:
+        <p><label>First name <span class="minLabel">(Only letters and '`- symbols allowed)</span><span class="required">*</span>:
                 <input id="firstNameIsValid" name="data[firstName]" placeholder="First name..."
-                       pattern="^([\u00C0-\u017Fa-zA-Z]{2,}(?:[-]?[\u00C0-\u017Fa-zA-Z]{2,}))$"
+                       pattern="^[.\D]{1,30}$"
                        maxlength="30" onkeypress="noDigits(event)" required>
             </label>
-            <span>Only latin alphabet and '`- symbols allowed </span>
+
             <span class="error" id="firstNameError"></span>
         </p>
-        <p><label>Last name<span class="required">*</span>:
+        <p><label>Last name <span class="minLabel">(Only letters and '`- symbols allowed)</span><span class="required">*</span>:
                 <input id="lastNameIsValid" name="data[lastName]" placeholder="Last name..."
-                       pattern="^([\u00C0-\u017Fa-zA-Z]{2,}(?:[-]?[\u00C0-\u017Fa-zA-Z]{2,}))$"
+                       pattern="^[.\D]{1,30}$"
                        maxlength="30" onkeypress="noDigits(event)" required>
             </label>
-            <span>Only latin alphabet (including accented characters) and '`- symbols allowed </span>
+
             <span class="error" id="lastNameError"></span>
         </p>
         <p><label>Birth date<span class="required">*</span>:
@@ -48,7 +48,7 @@ include('source/views/layouts/header.php');
             </label>
             <span class="error" id="countryError"></span>
         </p>
-        <p><label>Phone number (in the following format: "+1 (555) 555-5555")<span class="required">*</span>:
+        <p><label>Phone number <span class="minLabel">(in the following format: "+1 (555) 555-5555")</span><span class="required">*</span>:
                 <input id="phoneIsValid" name="data[phone]"  minlength="17"
                        data-mask="+0 (000) 000-0000" placeholder="+1 (555) 555-5555" required type="tel">
             </label>
@@ -142,6 +142,10 @@ include('source/views/layouts/header.php');
         formData.append("photo", file_data);
         let result;
 
+        for (let value of formData.entries()){
+            sessionStorage.setItem(value[0], value[1].toString());
+        }
+
 
         $.ajax({
             type: "POST",
@@ -152,9 +156,7 @@ include('source/views/layouts/header.php');
             data: formData,
             success: function (data) {
                 if (typeof data === 'string') {
-
                     result = JSON.parse(data);
-                    console.log(result)
                     toggleErrors(noErrors);
                     nextPrev(n, result);
                     return false;
@@ -189,6 +191,25 @@ include('source/views/layouts/header.php');
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
         formData.append("photo", file_data);
+
+        // Too much hard-code.
+        // Tried to iterate through formData array using for .. of ..,
+        // but it leads app to crush, sooo I left it like this for now
+
+        formData.append('data[firstName]', sessionStorage.getItem('data[firstName]'));
+        formData.append('data[lastName]', sessionStorage.getItem('data[lastName]'));
+        formData.append('data[subject]', sessionStorage.getItem('data[subject]'));
+        formData.append('data[date]', sessionStorage.getItem('data[date]'));
+        formData.append('data[phone]', sessionStorage.getItem('data[phone]'));
+        formData.append('data[email]', sessionStorage.getItem('data[email]'));
+        formData.append('data[country]', sessionStorage.getItem('data[country]'));
+        sessionStorage.removeItem('data[firstName]');
+        sessionStorage.removeItem('data[lastName]');
+        sessionStorage.removeItem('data[subject]');
+        sessionStorage.removeItem('data[date]');
+        sessionStorage.removeItem('data[phone]');
+        sessionStorage.removeItem('data[email]');
+        sessionStorage.removeItem('data[country]');
 
         $.ajax({
             type: "POST",

@@ -12,7 +12,7 @@ class MembersModel extends Model
         $errors = [];
         if ($record['firstName'] === '') {
             $errors['firstName'] = 'Input is empty!';
-        } else if (!preg_match("/^([A-Za-zÀ-ÿ\"`-]{1,30})$/", $record['firstName'])) {
+        } else if (!preg_match("/^[.\D]{1,30}$/", $record['firstName'])) {
             $errors['firstName'] = 'Invalid input!';
         } else if (strlen($record['firstName']) > 30) {
             $errors['firstName'] = 'Input field should be maximum 30 symbols long';
@@ -20,7 +20,7 @@ class MembersModel extends Model
 
         if ($record['lastName'] === '') {
             $errors['lastName'] = 'Input is empty!';
-        } else if (!preg_match("/^([A-Za-zÀ-ÿ\"`-]{1,30})$/", $record['lastName'])) {
+        } else if (!preg_match("/^[.\D]{1,30}$/", $record['lastName'])) {
             $errors['lastName'] = 'Invalid input!';
         } else if (strlen($record['lastName']) > 30) {
             $errors['lastName'] = 'Input field should be maximum 30 symbols long';

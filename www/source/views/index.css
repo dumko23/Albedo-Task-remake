@@ -1,7 +1,7 @@
 /*
 will be moved to styles folder later
  */
-html{
+html {
     font-family: 'Gentium Plus', serif;
     background-color: azure;
 }
@@ -51,29 +51,30 @@ input.invalid {
     background-color: #04AA6D;
 }
 
-.members-link{
+.members-link {
     margin: 10px auto;
     padding: 10px;
     width: 70%;
     text-align: center;
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
     padding: 0.5rem 1rem;
     background-color: #04AA6D;
     margin-bottom: 2rem;
 }
-a:hover{
+
+a:hover {
     background-color: darkcyan;
 }
 
-.memberList{
+.memberList {
     margin-top: 2rem;
 }
 
-.member-table{
+.member-table {
     border: 1px solid black;
     margin: 5px auto;
     width: 70%;
@@ -82,34 +83,34 @@ a:hover{
 table {
     width: 100%;
     border-collapse: collapse;
-    border: 2px solid rgb(200,200,200);
+    border: 2px solid rgb(200, 200, 200);
     letter-spacing: 1px;
     font-size: 0.8rem;
 }
 
 td, th {
-    border: 1px solid rgb(190,190,190);
+    border: 1px solid rgb(190, 190, 190);
     padding: 10px 20px;
 }
 
 th {
-    background-color: rgb(235,235,235);
+    background-color: rgb(235, 235, 235);
 }
 
 td {
     text-align: center;
 }
 
-.descr{
+.descr {
     width: 25%;
 }
 
-img{
+img {
     width: 300px;
     height: auto;
 }
 
-.error{
+.error {
     display: inline-block;
     color: red;
     margin: 0.5rem;
@@ -137,39 +138,46 @@ img{
     color: white;
 }
 
-.flex-row{
+.flex-row {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-content: center;
 }
 
-.flex-column{
+.flex-column {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.finishAnchor{
+.finishAnchor {
     margin: 0 auto 2rem;
     display: flex;
     justify-content: center;
 }
 
-.country{
+.country {
     width: 100%;
 }
 
-.required{
+.required {
     color: red;
 }
-button{
+
+button {
     padding: 0.5rem 1rem;
     background-color: #55ACEE;
     border: none;
 }
-button:hover{
+
+button:hover {
     background-color: #3B5998;
     cursor: pointer;
+}
+
+.minLabel {
+    font-size: 0.75rem;
+    color: grey;
 }
