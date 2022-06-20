@@ -9,9 +9,9 @@ include('source/views/layouts/header.php')
 <a href="/">Back to Register Form</a>
 <div class="memberList">
     <?php
-    Application::get('views')
+    Application::get('pageController')
         ->showMembers(Application::get('database')
-            ->getMembersFromDB(
+            ->getFromDB(
                     'photo, firstName, lastName, email, subject',
                     Application::get('config')['database']['dbAndTable']
             )

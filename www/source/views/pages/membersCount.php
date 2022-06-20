@@ -3,7 +3,7 @@
 use App\core\Application;
 
 $membersCount = Application::get('database')
-    ->getMembersFromDB(
+    ->getFromDB(
         'memberId',
         Application::get('config')['database']['dbAndTable']
     );

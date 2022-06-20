@@ -13,7 +13,7 @@ class QueryBuilder
         $this->pdo = $pdo;
     }
 
-    public function getMembersFromDB(string $selectString, $dbAndTable, $where = '', $searchItem =''): bool|array
+    public function getFromDB(string $selectString, $dbAndTable, $where = '', $searchItem =''): bool|array
     {
         if ($searchItem !== ''){
             $searchItem = "'$searchItem'";
@@ -24,7 +24,7 @@ class QueryBuilder
         return $statement->fetchAll();
     }
 
-    public function insertMemberToDB($dbAndTable, $data): void
+    public function insertToDB($dbAndTable, $data): void
     {
         $sql = sprintf('insert into %s (%s) values(%s)',
             $dbAndTable,
@@ -34,9 +34,9 @@ class QueryBuilder
         $statement->execute(array_values($data));
     }
 
-    public function searchMemberInDB(string $selectString, $dbAndTable, $where, $searchItem): bool|array
+    public function searchInDB(string $selectString, $dbAndTable, $where, $searchItem): bool|array
     {
-        return $this->getMembersFromDB($selectString, $dbAndTable, $where, $searchItem);
+        return $this->getFromDB($selectString, $dbAndTable, $where, $searchItem);
     }
 
     public function update($dbAndTable, $data, $where, $searchItem): void

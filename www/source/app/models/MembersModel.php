@@ -7,6 +7,47 @@ use App\core\Model;
 
 class MembersModel extends Model
 {
+    public const RULE_REQUIRED = 'required';
+    public const RULE_INVALID = 'invalid';
+    public const RULE_30_LONG = '30_long';
+    public const RULE_MAX = 'max';
+    public const RULE_DATE = 'date';
+    public const RULE_PHONE = 'phone';
+    public const RULE_EMAIL = 'email format';
+    public const RULE_EMAIL_UNIQUE = 'unique';
+
+
+    public function addError($errorList, $name, $rule){
+        $errorList[$name] = $this->errorMessages()[$rule];
+    }
+
+    public function errorMessages()
+    {
+        return [
+            self::RULE_REQUIRED => 'Input is empty!',
+            self::RULE_INVALID => 'Invalid input!',
+            self::RULE_30_LONG => 'Input field should be maximum 30 symbols long',
+            self::RULE_MAX => 'Your input is too long',
+            self::RULE_DATE => 'Incorrect date value!',
+            self::RULE_PHONE => 'Incorrect phone number format! Should contain 11 digits!',
+            self::RULE_EMAIL => 'Incorrect email format!',
+            self::RULE_EMAIL_UNIQUE => 'This email is already registered!'
+        ];
+    }
+
+    public function rules(){
+        return [
+            'firstName' => [self::RULE_REQUIRED, self::RULE_INVALID, self::RULE_30_LONG],
+            'lastName' => [self::RULE_REQUIRED, self::RULE_INVALID, self::RULE_30_LONG],
+            'date' => [self::RULE_REQUIRED, self::RULE_MAX, self::RULE_DATE],
+            'country' => [self::RULE_REQUIRED, self::RULE_MAX],
+            'subject' => [self::RULE_REQUIRED, self::RULE_MAX],
+            'phone' => [self::RULE_REQUIRED, self::RULE_PHONE],
+            'email' => [self::RULE_REQUIRED, self::RULE_MAX, self::RULE_EMAIL, self::RULE_EMAIL_UNIQUE]
+        ];
+    }
+
+
     protected function validateInput($config, $record): string
     {
         $errors = [];
@@ -30,7 +71,7 @@ class MembersModel extends Model
             $errors['date'] = 'Input is empty!';
         } else if (strlen($record['date']) > 255) {
             $errors['date'] = 'Your input is too long';
-        } else if(strtotime($record['date']) > strtotime(2005-01-01)){
+        } else if (strtotime($record['date']) > strtotime(2005 - 01 - 01)) {
             $errors['date'] = 'Incorrect date value!';
         }
 
@@ -76,7 +117,7 @@ class MembersModel extends Model
             if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
                 $errors['email'] = 'Incorrect email format!';
             } else {
-                if (isset(Application::get('database')->searchMemberInDB(
+                if (isset($this->search(
                         'memberId',
                         $config['database']['dbAndTable'],
                         'where email=',
@@ -102,7 +143,7 @@ class MembersModel extends Model
         $data = $member;
         $validateResult = $this->validateInput($config, $data);
         if ($validateResult === "1") {
-            $this->addMember($data);
+            $this->add($data);
         } else {
             return $validateResult;
         }
@@ -111,7 +152,7 @@ class MembersModel extends Model
 
     protected function updateMemberRecord($config, $data, $uploadFile, $basename): bool|array
     {
-        $searchedId = Application::get('database')->searchMemberInDB(
+        $searchedId = $this->search(
             'memberId',
             $config['database']['dbAndTable'],
             'where email=',
@@ -131,7 +172,7 @@ class MembersModel extends Model
                 $uploadFile = '';
             }
             $data['photo'] = $uploadFile;
-            $this->updateMember($data,
+            $this->update($data,
                 'email',
                 $data['email']);
             return true;
