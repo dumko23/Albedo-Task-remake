@@ -7,141 +7,69 @@ use App\core\Model;
 
 class MembersModel extends Model
 {
-    public const RULE_REQUIRED = 'required';
-    public const RULE_INVALID = 'invalid';
-    public const RULE_30_LONG = '30_long';
-    public const RULE_MAX = 'max';
-    public const RULE_DATE = 'date';
-    public const RULE_PHONE = 'phone';
-    public const RULE_EMAIL = 'email format';
-    public const RULE_EMAIL_UNIQUE = 'unique';
 
 
-    public function addError($errorList, $name, $rule){
-        $errorList[$name] = $this->errorMessages()[$rule];
-    }
-
-    public function errorMessages()
+    public function rules(): array
     {
-        return [
-            self::RULE_REQUIRED => 'Input is empty!',
-            self::RULE_INVALID => 'Invalid input!',
-            self::RULE_30_LONG => 'Input field should be maximum 30 symbols long',
-            self::RULE_MAX => 'Your input is too long',
-            self::RULE_DATE => 'Incorrect date value!',
-            self::RULE_PHONE => 'Incorrect phone number format! Should contain 11 digits!',
-            self::RULE_EMAIL => 'Incorrect email format!',
-            self::RULE_EMAIL_UNIQUE => 'This email is already registered!'
-        ];
-    }
-
-    public function rules(){
         return [
             'firstName' => [self::RULE_REQUIRED, self::RULE_INVALID, self::RULE_30_LONG],
             'lastName' => [self::RULE_REQUIRED, self::RULE_INVALID, self::RULE_30_LONG],
-            'date' => [self::RULE_REQUIRED, self::RULE_MAX, self::RULE_DATE],
-            'country' => [self::RULE_REQUIRED, self::RULE_MAX],
-            'subject' => [self::RULE_REQUIRED, self::RULE_MAX],
+            'date' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH, self::RULE_DATE],
+            'country' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH],
+            'subject' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH],
             'phone' => [self::RULE_REQUIRED, self::RULE_PHONE],
-            'email' => [self::RULE_REQUIRED, self::RULE_MAX, self::RULE_EMAIL, self::RULE_EMAIL_UNIQUE]
+            'email' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH, self::RULE_EMAIL, self::RULE_EMAIL_UNIQUE]
         ];
     }
 
-
-    protected function validateInput($config, $record): string
+    public function validation($config, $record): bool|string
     {
-        $errors = [];
-        if ($record['firstName'] === '') {
-            $errors['firstName'] = 'Input is empty!';
-        } else if (!preg_match("/^[.\D]{1,30}$/", $record['firstName'])) {
-            $errors['firstName'] = 'Invalid input!';
-        } else if (strlen($record['firstName']) > 30) {
-            $errors['firstName'] = 'Input field should be maximum 30 symbols long';
-        }
-
-        if ($record['lastName'] === '') {
-            $errors['lastName'] = 'Input is empty!';
-        } else if (!preg_match("/^[.\D]{1,30}$/", $record['lastName'])) {
-            $errors['lastName'] = 'Invalid input!';
-        } else if (strlen($record['lastName']) > 30) {
-            $errors['lastName'] = 'Input field should be maximum 30 symbols long';
-        }
-
-        if ($record['date'] === '') {
-            $errors['date'] = 'Input is empty!';
-        } else if (strlen($record['date']) > 255) {
-            $errors['date'] = 'Your input is too long';
-        } else if (strtotime($record['date']) > strtotime(2005 - 01 - 01)) {
-            $errors['date'] = 'Incorrect date value!';
-        }
-
-        if ($record['subject'] === '') {
-            $errors['subject'] = 'Input is empty!';
-        } else if (strlen($record['subject']) > 255) {
-            $errors['subject'] = 'Your input is too long';
-        }
-
-        if (!isset($record['country'])) {
-            $errors['country'] = 'Input is empty!';
-        } else if (strlen($record['country']) > 255) {
-            $errors['country'] = 'Your input is too long';
-        }
-
-        if ($record['phone'] === '') {
-            $errors['phone'] = 'Input is empty!';
-        } else {
-
-            $number = preg_replace('/\D/', '', $record['phone']);
-            if (strlen($number) === 11) {
-                $number = str_split($number);
-                $number = sprintf('+%s (%s) %s-%s',
-                    $number[0],
-                    implode('', array_splice($number, 0, 3)),
-                    implode('', array_splice($number, 0, 3)),
-                    implode('', array_splice($number, 0, 4))
-                );
-            }
-            //"+1 (555) 555-5555"  validation
-            if (preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $number)) {
-                $record['phone'] = $record;
-            } else {
-                $errors['phone'] = "Incorrect phone number format! Should contain 11 digits!";
-            }
-        }
-
-        if ($record['email'] === '') {
-            $errors['email'] = 'Input is empty!';
-        } else if (strlen($record['email']) > 255) {
-            $errors['email'] = 'Your input is too long';
-        } else {
-            if (filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
-                $errors['email'] = 'Incorrect email format!';
-            } else {
-                if (isset($this->search(
-                        'memberId',
-                        $config['database']['dbAndTable'],
-                        'where email=',
-                        $record['email']
-                    )[0])) {
-                    $errors['email'] = 'This email is already registered!';
+        foreach ($record as $fieldName => $fieldValue) {
+            if (isset($this->rules()[$fieldName])) {
+                foreach ($this->rules()[$fieldName] as $rule) {
+                    if ($rule === self::RULE_REQUIRED && $fieldValue === '') {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    } else if ($rule === self::RULE_INVALID && !preg_match("/^[.\D]{1,30}$/", $fieldValue)) {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    } else if ($rule === self::RULE_DATE && strtotime($fieldValue) > strtotime(2005 - 01 - 01)) {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    } else if ($rule === self::RULE_MAXLENGTH && strlen($fieldValue) > 255) {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    } else if ($rule === self::RULE_PHONE && !preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $fieldValue)) {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    } else if ($rule === self::RULE_EMAIL && filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    } else if ($rule === self::RULE_EMAIL_UNIQUE && isset($this->search(
+                                'memberId',
+                                $config['database']['dbAndTable'],
+                                'where email=',
+                                $fieldValue
+                            )[0])) {
+                        $this->addError(static::$errors, $fieldName, $rule);
+                        continue 2;
+                    }
                 }
             }
         }
-
-        if (count($errors) === 0) {
+        if (count(static::$errors) === 0) {
             return true;
         } else {
-            $result = json_encode($errors);
-            unset($errors);
+            $result = json_encode(static::$errors);
+            static::$errors = [];
             return $result;
         }
-
     }
 
     protected function newMemberRecord($config, array $member): bool|string
     {
         $data = $member;
-        $validateResult = $this->validateInput($config, $data);
+        $validateResult = $this->validation($config, $data);
         if ($validateResult === "1") {
             $this->add($data);
         } else {
