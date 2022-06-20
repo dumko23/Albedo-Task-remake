@@ -1,18 +1,13 @@
 <?php
 
-use App\core\Application;
+use App\core\Request;
+use App\core\Router;
 
 require __DIR__ . '/vendor/autoload.php';
 require 'source/core/bootstrap.php';
 
-
-Application::get('router')
-    ->callAction(...Application::get('router')
-        ->load('source/routes.php')
-        ->redirect(
-            Application::get('request')
-                ->getUri($_SERVER['REQUEST_URI']),
-            Application::get('request')
-                ->getRequestMethod()
-        )
+Router::load('source/routes.php')
+    ->redirect(
+        Request::getUri($_SERVER['REQUEST_URI']),
+        Request::getRequestMethod()
     );

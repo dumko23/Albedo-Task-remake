@@ -22,12 +22,16 @@ class Router
         return $router;
     }
 
-    public function redirect($uri, $requestMethod): array
+    public function redirect($uri, $requestMethod)
     {
         if (array_key_exists($uri, $this->routes[$requestMethod])) {
-            return explode('@', $this->routes[$requestMethod][$uri]);
+            return $this->callAction(
+                ...explode('@', $this->routes[$requestMethod][$uri])
+            );
         } else {
-            return explode('@', $this->routes['404']);
+            return $this->callAction(
+                ...explode('@', $this->routes['404'])
+            );
         }
     }
 

@@ -18,7 +18,5 @@ Application::bind('database', new QueryBuilder(
 );
 Application::bind('views', new MembersView());
 Application::bind('membersModel', new MembersModel());
-Application::bind('router', new Router());
-Application::bind('request', new Request());
 Application::bind('pageController', new PageController());
 Application::bind('handleController', new HandleController());
