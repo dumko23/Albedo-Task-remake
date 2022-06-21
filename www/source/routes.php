@@ -1,7 +1,7 @@
 <?php
 
-$router->get('', 'pageController@main');
-$router->get('members', 'pageController@members');
-$router->get('get', 'pageController@membersCount');
-$router->post('send', 'handleController@send');
-$router->post('update', 'handleController@update');
+$router->get('', 'PageController@main');
+$router->get('members', 'PageController@members');
+$router->get('get', 'PageController@membersCount');
+$router->post('send', 'HandleController@send');
+$router->post('update', 'HandleController@update');

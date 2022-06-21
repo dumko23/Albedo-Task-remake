@@ -2,8 +2,9 @@
 
 namespace App\core;
 
-
 use Exception;
+use App\app\controllers\PageController;
+use App\app\controllers\HandleController;
 
 class Router
 {
@@ -45,15 +46,19 @@ class Router
         $this->routes['POST'][$uri] = $controller;
     }
 
-    public function callAction($controller, $action){
-        if (! method_exists(Application::get($controller), $action)){
+    protected function callAction($controller, $action)
+    {
+        $controller = "App\app\controllers\\$controller";
+        if (!method_exists($controller, $action)) {
             var_dump($controller, $action);
+            (new PageController())->page404();
             throw new Exception("{$controller} does not respond to the {$action} action");
         }
-        if($action === 'send' || $action === 'update'){
-            return require Application::get($controller)->$action();
+
+        if ($action === 'send' || $action === 'update') {
+            return require (new $controller)->$action();
         }
-        $result = Application::get($controller)->$action();
-        return Application::get('views')->showView($result);
+        $result = (new $controller())->$action();
+        return (new View)->showView($result);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\app\controllers;
 
-use App\core\Application;
 use App\core\Controller;
 
 class PageController extends Controller
