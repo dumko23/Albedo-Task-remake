@@ -49,6 +49,7 @@ class Router
     protected function callAction($controller, $action)
     {
         $controller = "App\app\controllers\\$controller";
+        $controller = new $controller;
         if (!method_exists($controller, $action)) {
             var_dump($controller, $action);
             (new PageController())->page404();
@@ -56,9 +57,10 @@ class Router
         }
 
         if ($action === 'send' || $action === 'update') {
-            return require (new $controller)->$action();
+            return require $controller->$action();
         }
-        $result = (new $controller())->$action();
-        return (new View)->showView($result);
+        $result = $controller->$action();
+        $data = $controller->showMembers();
+        return (new View)->showView($result, $data);
     }
 }

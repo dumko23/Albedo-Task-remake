@@ -56,4 +56,8 @@ class Model
         $errorList[$name] = $this->errorMessages()[$rule];
         return $errorList;
     }
+
+    public static function getData($select, $dbAndTable, $where = '', $searchedItem = ''){
+       return Application::get('database')->getFromDB($select, $dbAndTable, $where, $searchedItem);
+    }
 }

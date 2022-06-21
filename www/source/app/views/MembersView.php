@@ -6,11 +6,11 @@ use App\core\View;
 
 class MembersView extends View
 {
-    public function createViewPath($page){
+    public static function createViewPath($page){
         return "source/views/pages/{$page}.php";
     }
 
-    public function createHandlerPath($file){
+    public static function createHandlerPath($file){
         return "source/views/handlers/{$file}.php";
     }
 }
