@@ -16,7 +16,3 @@ Application::bind('database', new QueryBuilder(
         )
     )
 );
-Application::bind('views', new MembersView());
-Application::bind('membersModel', new MembersModel());
-Application::bind('pageController', new PageController());
-Application::bind('handleController', new HandleController());
