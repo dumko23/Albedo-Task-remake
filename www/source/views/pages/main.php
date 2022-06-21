@@ -216,58 +216,39 @@ include('source/views/layouts/header.php');
                 document.getElementById('fileWarning').innerHTML = `Max file size is 10 MB. Your is ${fileSize.toFixed(2)} MB`
                 return false;
             } else {
-                $.ajax({
-                    type: "POST",
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    url: 'update',
-                    data: formData,
-                    success: function (data) {
-                        if (data) {
-                            console.log(data);
-                            $('#imgLoad').addClass('invalid');
-                            $('#fileWarning').html(data);
-                        } else {
-                            nextPrev(n)
-                            sessionStorage.removeItem('data[firstName]');
-                            sessionStorage.removeItem('data[lastName]');
-                            sessionStorage.removeItem('data[subject]');
-                            sessionStorage.removeItem('data[date]');
-                            sessionStorage.removeItem('data[phone]');
-                            sessionStorage.removeItem('data[email]');
-                            sessionStorage.removeItem('data[country]');
-                        }
-                    }
-                });
+                upload(formData, n);
             }
         } else {
-            $.ajax({
-                type: "POST",
-                processData: false,
-                contentType: false,
-                cache: false,
-                url: 'update',
-                data: formData,
-                success: function (data) {
-                    if (data) {
-                        console.log(data);
-                        $('#imgLoad').addClass('invalid');
-                        $('#fileWarning').html(data);
-                    } else {
-                        nextPrev(n)
-                        sessionStorage.removeItem('data[firstName]');
-                        sessionStorage.removeItem('data[lastName]');
-                        sessionStorage.removeItem('data[subject]');
-                        sessionStorage.removeItem('data[date]');
-                        sessionStorage.removeItem('data[phone]');
-                        sessionStorage.removeItem('data[email]');
-                        sessionStorage.removeItem('data[country]');
-                    }
-                }
-            });
+            upload(formData, n);
         }
 
+    }
+
+    function upload(formData, n){
+        $.ajax({
+            type: "POST",
+            processData: false,
+            contentType: false,
+            cache: false,
+            url: 'update',
+            data: formData,
+            success: function (data) {
+                if (data) {
+                    console.log(data);
+                    $('#imgLoad').addClass('invalid');
+                    $('#fileWarning').html(data);
+                } else {
+                    nextPrev(n);
+                    sessionStorage.removeItem('data[firstName]');
+                    sessionStorage.removeItem('data[lastName]');
+                    sessionStorage.removeItem('data[subject]');
+                    sessionStorage.removeItem('data[date]');
+                    sessionStorage.removeItem('data[phone]');
+                    sessionStorage.removeItem('data[email]');
+                    sessionStorage.removeItem('data[country]');
+                }
+            }
+        });
     }
 
     function getCount() {
