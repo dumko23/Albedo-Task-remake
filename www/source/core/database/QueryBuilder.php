@@ -39,7 +39,7 @@ class QueryBuilder
         return $this->getFromDB($selectString, $dbAndTable, $where, $searchItem);
     }
 
-    public function update($dbAndTable, $data, $where, $searchItem): void
+    public function updateDB($dbAndTable, $data, $where, $searchItem): void
     {
         $searchItem = "'$searchItem'";
         $sql = sprintf('update %s set %s  where %s = %s',

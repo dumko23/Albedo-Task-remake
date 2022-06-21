@@ -2,6 +2,7 @@
 
 namespace App\app\models;
 
+use App\core\Application;
 use App\core\Model;
 
 class MembersModel extends Model
@@ -21,44 +22,45 @@ class MembersModel extends Model
 
     public function validation($config, $record): bool|string
     {
+        $errors = [];
         foreach ($record as $fieldName => $fieldValue) {
             if (isset($this->rules()[$fieldName])) {
                 foreach ($this->rules()[$fieldName] as $rule) {
                     if ($rule === self::RULE_REQUIRED && $fieldValue === '') {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
                     } else if ($rule === self::RULE_INVALID && !preg_match("/^[.\D]{1,30}$/", $fieldValue)) {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
                     } else if ($rule === self::RULE_DATE && strtotime($fieldValue) > strtotime(2005 - 01 - 01)) {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
                     } else if ($rule === self::RULE_MAXLENGTH && strlen($fieldValue) > 255) {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
                     } else if ($rule === self::RULE_PHONE && !preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $fieldValue)) {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
                     } else if ($rule === self::RULE_EMAIL && filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
-                    } else if ($rule === self::RULE_EMAIL_UNIQUE && isset($this->search(
+                    } else if ($rule === self::RULE_EMAIL_UNIQUE && isset(Application::get('database')->searchInDB(
                                 'memberId',
                                 $config['database']['dbAndTable'],
                                 'where email=',
                                 $fieldValue
                             )[0])) {
-                        $this->addError(static::$errors, $fieldName, $rule);
+                        $errors = $this->addError($errors, $fieldName, $rule);
                         continue 2;
                     }
                 }
             }
         }
-        if (count(static::$errors) === 0) {
+        if (count($errors) === 0) {
             return true;
         } else {
-            $result = json_encode(static::$errors);
-            static::$errors = [];
+            $result = json_encode($errors);
+            unset($errors);
             return $result;
         }
     }
@@ -67,9 +69,11 @@ class MembersModel extends Model
     {
         $data = $member;
         $validateResult = $this->validation($config, $data);
-        if ($validateResult === "1") {
+
+        if ($validateResult === true) {
             $this->add($data);
-        } else {
+        }
+        else {
             return $validateResult;
         }
         return true;
@@ -77,13 +81,13 @@ class MembersModel extends Model
 
     protected function updateMemberRecord($config, $data, $uploadFile, $basename): bool|array
     {
-        $searchedId = $this->search(
+        $searchedId = Application::get('database')->searchInDB(
             'memberId',
             $config['database']['dbAndTable'],
             'where email=',
             $data['email']
         );
-        if ($searchedId) {
+        if (isset($searchedId)) {
             if (!$data['company']) {
                 $data['company'] = '';
             }

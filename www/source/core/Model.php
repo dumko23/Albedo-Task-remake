@@ -12,7 +12,7 @@ class Model
     public const RULE_PHONE = 'phone';
     public const RULE_EMAIL = 'email format';
     public const RULE_EMAIL_UNIQUE = 'unique';
-    public static array $errors = [];
+
 
     public function add($data): void
     {
@@ -24,7 +24,7 @@ class Model
 
     public function update($data, $whereStatement, $match): void
     {
-        Application::get('database')->update(
+        Application::get('database')->updateDB(
             Application::get('config')['database']['dbAndTable'],
             $data,
             $whereStatement,
@@ -52,8 +52,9 @@ class Model
         ];
     }
 
-    public function addError($errorList, $name, $rule): void
+    public function addError($errorList, $name, $rule)
     {
-        static::$errors[$name] = $this->errorMessages()[$rule];
+        $errorList[$name] = $this->errorMessages()[$rule];
+        return $errorList;
     }
 }
