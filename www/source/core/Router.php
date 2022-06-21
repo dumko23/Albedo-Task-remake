@@ -10,7 +10,7 @@ class Router
     protected array $routes = [
         'POST' => [],
         'GET' => [],
-        '404' => 'controller@get404'
+        '404' => 'pageController@page404'
     ];
 
     public static function load($file): static
