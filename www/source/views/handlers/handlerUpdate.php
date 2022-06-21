@@ -17,7 +17,6 @@ if ($basename){
     $is_check = in_array($ext, ['jpg', 'png', 'jpeg'], true);
 }
 
-
 if($_FILES['photo']['size'] > 5242880){
     $fileSize = number_format($_FILES['photo']['size']/1048576, 2, ',', ' ');
     echo "Max file size is 10 MB. Your is {$fileSize} MB";
@@ -30,8 +29,6 @@ if($_FILES['photo']['size'] > 5242880){
 if ($basename && !move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
     echo 'Ошибка при загрузке файла';
 }
-
-
 
 
 Application::get('membersModel')->updateAdditionalInfo(Application::get('config'), $data, $uploadFile, $basename);

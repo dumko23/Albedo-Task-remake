@@ -18,7 +18,4 @@ return [
     'shareMessage' => [
         'message' => 'Check out this Meetup with SoCal AngularJS!',
     ],
-    'uploads' => [
-        'max_file_size' => 5242880,
-    ]
 ];

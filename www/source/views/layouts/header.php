@@ -27,8 +27,6 @@ namespace App\source\view\layout;
 
 use App\core\Application;
 
-
-
 $content = Application::get('config')['shareMessage']['message'];
 $url = urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 $title = urlencode($content);
@@ -47,6 +45,7 @@ $shareData = [
         'onclick' => 'window.open(this.href, \'Facebook\', \'width=640,height=436,toolbar=0,status=0\'); return false'
     ],
 ];
+
 $anchorList = [];
 foreach ($shareData as $key => $value) {
     $anchorList[] = '<a class="' . $value['class'] . '" href="' . $value['href'] . '"  onclick="' . $value['onclick'] . '"></a>';

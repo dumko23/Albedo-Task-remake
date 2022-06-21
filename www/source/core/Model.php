@@ -13,7 +13,6 @@ class Model
     public const RULE_EMAIL = 'email format';
     public const RULE_EMAIL_UNIQUE = 'unique';
 
-
     public function add($data): void
     {
         Application::get('database')->insertToDB(

@@ -109,7 +109,6 @@ class MembersModel extends Model
         return $searchedId;
     }
 
-
     public function registerNewMember($config, $data): bool|string
     {
         $result = $this->newMemberRecord($config, $data);

@@ -1,5 +1,3 @@
-// will be moved to script folder later
-
 function showTab(n) {
 
     const x = document.getElementsByClassName("tab");
@@ -24,7 +22,6 @@ function showTab(n) {
 async function nextPrev(n, result = true) {
 
     let x = document.getElementsByClassName("tab");
-
 
     if (currentTab === 0) {
         let resultOfAjax = result;

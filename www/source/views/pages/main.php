@@ -18,7 +18,6 @@ include('source/views/layouts/header.php');
                        pattern="^[.\D]{1,30}$"
                        maxlength="30" onkeypress="noDigits(event)" required>
             </label>
-
             <span class="error" id="firstNameError"></span>
         </p>
         <p><label>Last name <span class="minLabel">(Only letters and '`- symbols allowed)</span><span
@@ -27,7 +26,6 @@ include('source/views/layouts/header.php');
                        pattern="^[.\D]{1,30}$"
                        maxlength="30" onkeypress="noDigits(event)" required>
             </label>
-
             <span class="error" id="lastNameError"></span>
         </p>
         <p><label>Birth date<span class="required">*</span>:
@@ -83,13 +81,11 @@ include('source/views/layouts/header.php');
             </label></p>
         <span id="e-fileinfo"></span>
         <span id="fileWarning" class="error"></span>
-
     </div>
 
     <div class="tab">
         <h1 style="text-align: center">Registration complete! Share it with your friends!</h1>
         <div class="flex-row">
-
             <?php
             echo $anchors;
             ?>
@@ -150,7 +146,6 @@ include('source/views/layouts/header.php');
             sessionStorage.setItem(value[0], value[1].toString());
         }
 
-
         $.ajax({
             type: "POST",
             processData: false,
@@ -176,7 +171,6 @@ include('source/views/layouts/header.php');
     }
 
     function toggleErrors(data) {
-
         for (let prop in data) {
             if (!!data[prop]) {
 
@@ -208,7 +202,6 @@ include('source/views/layouts/header.php');
         formData.append('data[email]', sessionStorage.getItem('data[email]'));
         formData.append('data[country]', sessionStorage.getItem('data[country]'));
 
-
         let fileUploaded = document.getElementById("imgLoad").files[0];
         if (fileUploaded) {
             if (fileUploaded.size > 10485760) {
@@ -221,10 +214,9 @@ include('source/views/layouts/header.php');
         } else {
             upload(formData, n);
         }
-
     }
 
-    function upload(formData, n){
+    function upload(formData, n) {
         $.ajax({
             type: "POST",
             processData: false,
@@ -272,7 +264,6 @@ include('source/views/layouts/header.php');
         console.log(err);
     });
 
-
     let inputFirstName = document.getElementById('firstNameIsValid');
     inputFirstName.oninvalid = function (event) {
         event.target.setCustomValidity("First Name should contain latin letters or '`- symbols and be maximum 30 symbols long.");
@@ -314,7 +305,6 @@ include('source/views/layouts/header.php');
     }
 
     $(function () {
-
         $("#phoneIsValid").mask("+0 (000) 000-0000");
     });
 

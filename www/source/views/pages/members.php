@@ -12,8 +12,8 @@ include('source/views/layouts/header.php')
     Application::get('pageController')
         ->showMembers(Application::get('database')
             ->getFromDB(
-                    'photo, firstName, lastName, email, subject',
-                    Application::get('config')['database']['dbAndTable']
+                'photo, firstName, lastName, email, subject',
+                Application::get('config')['database']['dbAndTable']
             )
         );
     ?>
