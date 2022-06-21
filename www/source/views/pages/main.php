@@ -21,7 +21,8 @@ include('source/views/layouts/header.php');
 
             <span class="error" id="firstNameError"></span>
         </p>
-        <p><label>Last name <span class="minLabel">(Only letters and '`- symbols allowed)</span><span class="required">*</span>:
+        <p><label>Last name <span class="minLabel">(Only letters and '`- symbols allowed)</span><span
+                        class="required">*</span>:
                 <input id="lastNameIsValid" name="data[lastName]" placeholder="Last name..."
                        pattern="^[.\D]{1,30}$"
                        maxlength="30" onkeypress="noDigits(event)" required>
@@ -48,8 +49,9 @@ include('source/views/layouts/header.php');
             </label>
             <span class="error" id="countryError"></span>
         </p>
-        <p><label>Phone number <span class="minLabel">(in the following format: "+1 (555) 555-5555")</span><span class="required">*</span>:
-                <input id="phoneIsValid" name="data[phone]"  minlength="17"
+        <p><label>Phone number <span class="minLabel">(in the following format: "+1 (555) 555-5555")</span><span
+                        class="required">*</span>:
+                <input id="phoneIsValid" name="data[phone]" minlength="17"
                        data-mask="+0 (000) 000-0000" placeholder="+1 (555) 555-5555" required type="tel">
             </label>
             <span class="error" id="phoneError"></span>
@@ -75,11 +77,12 @@ include('source/views/layouts/header.php');
         <p><label>About me:
                 <textarea name="data[about]" placeholder="About me..."></textarea>
             </label></p>
-        <input type="hidden" name="MAX_FILE_SIZE" value="3000000000"/>
-        <p><label>My Photo (.png, .jpg, .jpeg):
+        <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+        <p><label>My Photo (.png, .jpg, .jpeg - up to 10Mb):
                 <input id="imgLoad" name="photo" type="file" accept=".png, .jpg, .jpeg">
             </label></p>
-        <p id="fileWarning"></p>
+        <span id="e-fileinfo"></span>
+        <span id="fileWarning" class="error"></span>
 
     </div>
 
@@ -92,14 +95,14 @@ include('source/views/layouts/header.php');
             ?>
         </div>
         <div class="finishAnchor">
-            <a  href="/">Back to 1st step</a>
+            <a href="/">Back to 1st step</a>
         </div>
     </div>
 
     <div style="overflow:auto;">
         <div style="float:right;">
             <button type="submit" id="nextBtn" onclick="sendData(currentTab)">Next</button>
-            <button type="submit" id="step2Btn" onclick="nextPrev(currentTab)">Finish</button>
+            <button type="submit" id="step2Btn" onclick="updateData(currentTab)">Finish</button>
         </div>
     </div>
 
@@ -120,8 +123,9 @@ include('source/views/layouts/header.php');
         currentTab = +sessionStorage.getItem('currentTab');
     } else if (+sessionStorage.getItem('currentTab') === 2) {
         currentTab = 0;
+        sessionStorage.setItem('currentTab', '0');
     }
-    sessionStorage.setItem('currentTab', '0');
+
 
     let noErrors = {
         country: "",
@@ -142,7 +146,7 @@ include('source/views/layouts/header.php');
         formData.append("photo", file_data);
         let result;
 
-        for (let value of formData.entries()){
+        for (let value of formData.entries()) {
             sessionStorage.setItem(value[0], value[1].toString());
         }
 
@@ -186,7 +190,7 @@ include('source/views/layouts/header.php');
         }
     }
 
-    function updateData() {
+    function updateData(n) {
         let oldForm = document.forms.form;
         let formData = new FormData(oldForm);
         let file_data = $('#imgLoad').prop('files')[0];
@@ -203,30 +207,72 @@ include('source/views/layouts/header.php');
         formData.append('data[phone]', sessionStorage.getItem('data[phone]'));
         formData.append('data[email]', sessionStorage.getItem('data[email]'));
         formData.append('data[country]', sessionStorage.getItem('data[country]'));
-        sessionStorage.removeItem('data[firstName]');
-        sessionStorage.removeItem('data[lastName]');
-        sessionStorage.removeItem('data[subject]');
-        sessionStorage.removeItem('data[date]');
-        sessionStorage.removeItem('data[phone]');
-        sessionStorage.removeItem('data[email]');
-        sessionStorage.removeItem('data[country]');
 
-        $.ajax({
-            type: "POST",
-            processData: false,
-            contentType: false,
-            cache: false,
-            url: 'update',
-            data: formData,
-            success: function (data) {
 
+        let fileUploaded = document.getElementById("imgLoad").files[0];
+        if (fileUploaded) {
+            if (fileUploaded.size > 10485760) {
+                let fileSize = fileUploaded.size / 1048576;
+                document.getElementById('fileWarning').innerHTML = `Max file size is 10 MB. Your is ${fileSize.toFixed(2)} MB`
+                return false;
+            } else {
+                $.ajax({
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    url: 'update',
+                    data: formData,
+                    success: function (data) {
+                        if (data) {
+                            console.log(data);
+                            $('#imgLoad').addClass('invalid');
+                            $('#fileWarning').html(data);
+                        } else {
+                            nextPrev(n)
+                            sessionStorage.removeItem('data[firstName]');
+                            sessionStorage.removeItem('data[lastName]');
+                            sessionStorage.removeItem('data[subject]');
+                            sessionStorage.removeItem('data[date]');
+                            sessionStorage.removeItem('data[phone]');
+                            sessionStorage.removeItem('data[email]');
+                            sessionStorage.removeItem('data[country]');
+                        }
+                    }
+                });
             }
-        });
+        } else {
+            $.ajax({
+                type: "POST",
+                processData: false,
+                contentType: false,
+                cache: false,
+                url: 'update',
+                data: formData,
+                success: function (data) {
+                    if (data) {
+                        console.log(data);
+                        $('#imgLoad').addClass('invalid');
+                        $('#fileWarning').html(data);
+                    } else {
+                        nextPrev(n)
+                        sessionStorage.removeItem('data[firstName]');
+                        sessionStorage.removeItem('data[lastName]');
+                        sessionStorage.removeItem('data[subject]');
+                        sessionStorage.removeItem('data[date]');
+                        sessionStorage.removeItem('data[phone]');
+                        sessionStorage.removeItem('data[email]');
+                        sessionStorage.removeItem('data[country]');
+                    }
+                }
+            });
+        }
+
     }
 
-    function getCount(){
-        $.get( "get", function( data ) {
-            $( "#membersCount" ).html( data );
+    function getCount() {
+        $.get("get", function (data) {
+            $("#membersCount").html(data);
         });
     }
 
@@ -247,7 +293,7 @@ include('source/views/layouts/header.php');
 
 
     let inputFirstName = document.getElementById('firstNameIsValid');
-    inputFirstName.oninvalid = function(event) {
+    inputFirstName.oninvalid = function (event) {
         event.target.setCustomValidity("First Name should contain latin letters or '`- symbols and be maximum 30 symbols long.");
     }
     inputFirstName.oninput = function (event) {
@@ -255,7 +301,7 @@ include('source/views/layouts/header.php');
     }
 
     let inputLastName = document.getElementById('lastNameIsValid');
-    inputLastName.oninvalid = function(event) {
+    inputLastName.oninvalid = function (event) {
         event.target.setCustomValidity("Last Name should contain latin letters or ' symbol and be maximum 30 symbols long.");
     }
     inputLastName.oninput = function (event) {
@@ -263,7 +309,7 @@ include('source/views/layouts/header.php');
     }
 
     let inputNumber = document.getElementById('phoneIsValid');
-    inputNumber.oninvalid = function(event) {
+    inputNumber.oninvalid = function (event) {
         event.target.setCustomValidity("Phone number should contain 11 digits");
     }
     inputNumber.oninput = function (event) {
@@ -271,7 +317,7 @@ include('source/views/layouts/header.php');
     }
 
     let inputEmail = document.getElementById('emailIsValid');
-    inputEmail.oninvalid = function(event) {
+    inputEmail.oninvalid = function (event) {
         event.target.setCustomValidity("Email should only contain latin letters, digits and @ symbol.");
     }
     inputEmail.oninput = function (event) {
@@ -279,14 +325,14 @@ include('source/views/layouts/header.php');
     }
 
     let inputDate = document.getElementById('dateIsValid');
-    inputDate.oninvalid = function(event) {
+    inputDate.oninvalid = function (event) {
         event.target.setCustomValidity("Maximum available date is 01-01-2005");
     }
     inputDate.oninput = function (event) {
         event.target.setCustomValidity('');
     }
 
-    $(function(){
+    $(function () {
 
         $("#phoneIsValid").mask("+0 (000) 000-0000");
     });
@@ -296,6 +342,20 @@ include('source/views/layouts/header.php');
             event.preventDefault();
     }
 
+    function updateSize() {
+        var file = document.getElementById("imgLoad").files[0],
+            ext = "не определилось",
+            parts = file.name.split('.');
+        if (parts.length > 1) {
+            ext = parts.pop();
+        }
+        document.getElementById("e-fileinfo").innerHTML = [
+            "File size: " + (file.size / 1048576).toFixed(2) + " Mb",
+            "Extension: " + ext
+        ].join("<br>");
+    }
+
+    document.getElementById('imgLoad').addEventListener('change', updateSize);
 </script>
 </body>
 </html>

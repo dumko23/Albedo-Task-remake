@@ -37,19 +37,7 @@ async function nextPrev(n, result = true) {
             toggleErrors(resultOfAjax);
         }
     } else if (currentTab === 1) {
-        let file_data = document.getElementById("imgLoad").files[0];
-        if (file_data) {
-            if (file_data.size > 3000000000) {
-                document.getElementById('fileWarning').innerHTML = `Max file size is 300. Your is ${file_data.size}`
-                return false;
-            } else {
-                updateData();
-                x[currentTab].style.display = "none";
-            }
-        } else {
-            updateData();
             x[currentTab].style.display = "none";
-        }
     }
     currentTab = currentTab + 1;
     sessionStorage.setItem('currentTab', currentTab.toString());

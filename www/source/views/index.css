@@ -111,7 +111,7 @@ img {
 }
 
 .error {
-    display: inline-block;
+    display: block;
     color: red;
     margin: 0.5rem;
 }
