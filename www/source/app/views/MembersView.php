@@ -11,6 +11,6 @@ class MembersView extends View
     }
 
     public static function createHandlerPath($file){
-        return "source/views/handlers/{$file}.php";
+        return "source/app/controllers/handlers/{$file}.php";
     }
 }
