@@ -3,15 +3,13 @@
 namespace App\core;
 
 use Exception;
-use App\app\controllers\PageController;
-use App\app\controllers\HandleController;
 
 class Router
 {
     protected array $routes = [
         'POST' => [],
         'GET' => [],
-        '404' => 'pageController@page404'
+        '404' => 'PageController@page404'
     ];
 
     public static function load($file): static
@@ -51,8 +49,6 @@ class Router
         $controller = "App\app\controllers\\$controller";
         $controller = new $controller;
         if (!method_exists($controller, $action)) {
-            var_dump($controller, $action);
-            (new PageController())->page404();
             throw new Exception("{$controller} does not respond to the {$action} action");
         }
 

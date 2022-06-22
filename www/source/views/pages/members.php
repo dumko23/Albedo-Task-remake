@@ -1,23 +1,11 @@
 <?php
 
-use App\core\Application;
-
 $title = "Members List";
 
 include('source/views/layouts/header.php')
 ?>
 <a href="/">Back to Register Form</a>
 <div class="memberList">
-    <!--    --><?php
-    //    Application::get('pageController')
-    //        ->showMembers(Application::get('database')
-    //            ->getFromDB(
-    //                'photo, firstName, lastName, email, subject',
-    //                Application::get('config')['database']['dbAndTable']
-    //            )
-    //        );
-    //    ?>
-
     <?php
     foreach ($data as $member) {
         if ($member['photo'] === '') {
