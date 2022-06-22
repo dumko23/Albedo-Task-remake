@@ -35,5 +35,6 @@ include('source/views/layouts/header.php')
 </div>
 
 <a style="position: fixed; bottom: 0; left: 0;" href="#">To the top</a>
-</body>
-</html>
+<?php
+include('source/views/layouts/footer.php');
+?>
