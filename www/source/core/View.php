@@ -4,11 +4,12 @@ namespace App\core;
 
 class View
 {
-    public function showView($view, $data = ''){
-        if($data){
+    public function showView($view){
+        if($view['data']){
+            $data = $view['data'];
             extract($data);
         }
 
-        return require $view;
+        return require $view['path'];
     }
 }

@@ -18,4 +18,8 @@ return [
     'shareMessage' => [
         'message' => 'Check out this Meetup with SoCal AngularJS!',
     ],
+    'pagePath' => [
+        'path' => 'source/views/pages/',
+        'ext' => '.php',
+    ]
 ];

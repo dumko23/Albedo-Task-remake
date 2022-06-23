@@ -52,11 +52,11 @@ class Router
             throw new Exception("{$controller} does not respond to the {$action} action");
         }
 
-        if ($action === 'send' || $action === 'update') {
-            return require $controller->$action();
+        if ($action === 'handleSend' || $action === 'handleUpdate') {
+            echo $controller->$action();
+            exit();
         }
         $result = $controller->$action();
-        $data = $controller->showMembers();
-        return (new View)->showView($result, $data);
+        return (new View)->showView($result);
     }
 }

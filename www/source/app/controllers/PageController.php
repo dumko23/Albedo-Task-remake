@@ -8,14 +8,21 @@ use App\core\Model;
 
 class PageController extends Controller
 {
-    public function main(): string
+    public function main(): array
     {
-        return $this->returnPagePath('main');
+
+        return [
+            'path' => $this->returnPagePath('main'),
+            'data' => '',
+        ];
     }
 
-    public function members(): string
+    public function members(): array
     {
-        return $this->returnPagePath('members');
+        return [
+            'path' => $this->returnPagePath('members'),
+            'data' => $this->showMembers(),
+        ];
     }
 
     public function showMembers()
@@ -24,13 +31,19 @@ class PageController extends Controller
                   Application::get('config')['database']['dbAndTable']);
     }
 
-    public function membersCount(): string
+    public function membersCount()
     {
-        return $this->returnPagePath('membersCount');
+        return [
+            'path' => $this->returnPagePath('membersCount'),
+            'data' => $this->showMembers(),
+        ];
     }
 
-    public function page404(): string
+    public function page404()
     {
-        return $this->returnPagePath('page404');
+        return [
+            'path' => $this->returnPagePath('page404'),
+            'data' => '',
+        ];
     }
 }

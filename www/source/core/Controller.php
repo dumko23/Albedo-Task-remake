@@ -6,11 +6,10 @@ use App\app\views\MembersView;
 
 class Controller
 {
-    public function returnPagePath($page){
-        return MembersView::createViewPath($page);
+    public function returnPagePath($page): string
+    {
+        $path = Application::get('config')['pagePath'];
+        return $path['path'] . $page . $path['ext'];
     }
 
-    public function returnHandlerPath($file){
-        return MembersView::createhandlerPath($file);
-    }
 }
