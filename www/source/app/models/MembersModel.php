@@ -10,59 +10,40 @@ class MembersModel extends Model
     public function rules(): array
     {
         return [
-            'firstName' => [self::RULE_REQUIRED, self::RULE_INVALID, self::RULE_30_LONG],
-            'lastName' => [self::RULE_REQUIRED, self::RULE_INVALID, self::RULE_30_LONG],
-            'date' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH, self::RULE_DATE],
-            'country' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH],
-            'subject' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH],
-            'phone' => [self::RULE_REQUIRED, self::RULE_PHONE],
-            'email' => [self::RULE_REQUIRED, self::RULE_MAXLENGTH, self::RULE_EMAIL, self::RULE_EMAIL_UNIQUE]
+            'firstName' => [
+                'required',
+                ['invalid', 'pattern' => "/^[.\D]{1,}$/",],
+                ['length', 'max' => 30,],
+            ],
+            'lastName' => [
+                'required',
+                ['invalid', 'pattern' => "/^[.\D]{1,}$/",],
+                ['length', 'max' => 30,],
+            ],
+            'date' => [
+                'required',
+                ['length', 'max' => 255,],
+                ['date', 'maxDate' => 2005 - 01 - 01,],
+            ],
+            'country' => [
+                'required',
+                ['length', 'max' => 255,],
+                ],
+            'subject' => [
+                'required',
+                ['length', 'max' => 255,],
+            ],
+            'phone' => [
+                'required',
+                ['phone', 'pattern' => '/\+\d \(\d{3}\) \d{3}-\d{4}/i'],
+                ],
+            'email' => [
+                'required',
+                ['length', 'max' => 255,],
+                'email format',
+                'unique',
+                ]
         ];
-    }
-
-    public function validation($config, $record): bool|string
-    {
-        $errors = [];
-        foreach ($record as $fieldName => $fieldValue) {
-            if (isset($this->rules()[$fieldName])) {
-                foreach ($this->rules()[$fieldName] as $rule) {
-                    if ($rule === self::RULE_REQUIRED && $fieldValue === '') {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    } else if ($rule === self::RULE_INVALID && !preg_match("/^[.\D]{1,30}$/", $fieldValue)) {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    } else if ($rule === self::RULE_DATE && strtotime($fieldValue) > strtotime(2005 - 01 - 01)) {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    } else if ($rule === self::RULE_MAXLENGTH && strlen($fieldValue) > 255) {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    } else if ($rule === self::RULE_PHONE && !preg_match('/\+\d \(\d{3}\) \d{3}-\d{4}/i', $fieldValue)) {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    } else if ($rule === self::RULE_EMAIL && filter_var($record['email'], FILTER_VALIDATE_EMAIL) === false) {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    } else if ($rule === self::RULE_EMAIL_UNIQUE && isset(Application::get('database')->searchInDB(
-                                'memberId',
-                                $config['database']['dbAndTable'],
-                                'where email=',
-                                $fieldValue
-                            )[0])) {
-                        $errors = $this->addError($errors, $fieldName, $rule);
-                        continue 2;
-                    }
-                }
-            }
-        }
-        if (count($errors) === 0) {
-            return true;
-        } else {
-            $result = json_encode($errors);
-            unset($errors);
-            return $result;
-        }
     }
 
     protected function newMemberRecord($config, array $member): bool|string
@@ -72,8 +53,7 @@ class MembersModel extends Model
 
         if ($validateResult === true) {
             $this->add($data);
-        }
-        else {
+        } else {
             return $validateResult;
         }
         return true;
