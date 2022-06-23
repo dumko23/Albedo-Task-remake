@@ -28,7 +28,7 @@ class PageController extends Controller
     public function showMembers()
     {
         return Model::getData('photo, firstName, lastName, email, subject',
-                  Application::get('config')['database']['dbAndTable']);
+            Application::get('config')['database']['dbAndTable']);
     }
 
     public function membersCount()
