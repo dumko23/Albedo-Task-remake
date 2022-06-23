@@ -87,10 +87,6 @@ class Model
                         $errors = $this->addError($errors, $fieldName, $ruleName);
                         continue 2;
 
-                    } else if ($ruleName === self::RULE_MAXLENGTH && strlen($fieldValue) > $rule['max']) {
-                        $errors = $this->addError($errors, $fieldName, $ruleName, $rule['max']);
-                        continue 2;
-
                     } else if ($ruleName === self::RULE_PHONE && !preg_match($rule['pattern'], $fieldValue)) {
                         $errors = $this->addError($errors, $fieldName, $ruleName);
                         continue 2;
