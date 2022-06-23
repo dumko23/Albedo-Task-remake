@@ -43,7 +43,7 @@ include('source/views/layouts/header.php');
             </p>
             <p><label>Country<span class="required">*</span>:
                     <select class="country" id="countryIsValid" name="data[country]" required>
-                        <option>Choose Country</option>
+                        <option selected disabled value="default">Choose Country</option>
                     </select>
                 </label>
                 <span class="error" id="countryError"></span>
@@ -114,12 +114,6 @@ include('source/views/layouts/header.php');
         <a href="members">All members (<span id="membersCount"></span>)</a>
     </div>
 
-    <script>
-
-
-
-
-    </script>
 <?php
 include('source/views/layouts/footer.php');
 ?>

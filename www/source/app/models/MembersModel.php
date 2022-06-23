@@ -10,39 +10,13 @@ class MembersModel extends Model
     public function rules(): array
     {
         return [
-            'firstName' => [
-                'required',
-                ['invalid', 'pattern' => "/^[.\D]{1,}$/",],
-                ['length', 'max' => 30,],
-            ],
-            'lastName' => [
-                'required',
-                ['invalid', 'pattern' => "/^[.\D]{1,}$/",],
-                ['length', 'max' => 30,],
-            ],
-            'date' => [
-                'required',
-                ['length', 'max' => 255,],
-                ['date', 'maxDate' => 2005 - 01 - 01,],
-            ],
-            'country' => [
-                'required',
-                ['length', 'max' => 255,],
-                ],
-            'subject' => [
-                'required',
-                ['length', 'max' => 255,],
-            ],
-            'phone' => [
-                'required',
-                ['phone', 'pattern' => '/\+\d \(\d{3}\) \d{3}-\d{4}/i'],
-                ],
-            'email' => [
-                'required',
-                ['length', 'max' => 255,],
-                'email format',
-                'unique',
-                ]
+            'firstName' => 'required|invalid:/^[.\D]{1,}$/|length:30|',
+            'lastName' => 'required|invalid:/^[.\D]{1,}$/|length:30|',
+            'date' => 'required|length:255|date:2005 - 01 - 01|',
+            'country' => 'required|invalid:/default/|length:255|',
+            'subject' => 'required|length:255|',
+            'phone' => 'required|invalid:/\+\d \(\d{3}\) \d{3}-\d{4}/i|',
+            'email' => 'required|length:255|emailFormat|unique|',
         ];
     }
 
