@@ -13,7 +13,7 @@ const countryList = document.querySelector('.country');
 fetch('https://restcountries.com/v3.1/all').then(res => {
     return res.json();
 }).then(data => {
-    let output = '';
+    let output = '<option selected disabled value="" hidden>Choose Country</option>`';
 
     data.sort((a, b) => (a.name.common > b.name.common) ? 1 : -1)
         .forEach(country => {

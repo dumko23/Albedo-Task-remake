@@ -43,7 +43,7 @@ include('source/views/layouts/header.php');
             </p>
             <p><label>Country<span class="required">*</span>:
                     <select class="country" id="countryIsValid" name="data[country]" required>
-                        <option selected disabled value="default">Choose Country</option>
+                        <option selected disabled value="" hidden>Choose Country</option>
                     </select>
                 </label>
                 <span class="error" id="countryError"></span>

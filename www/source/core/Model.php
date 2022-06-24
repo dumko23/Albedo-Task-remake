@@ -52,10 +52,12 @@ class Model
                 $string = $record[$fieldName];
                 if (!preg_match($matches[0][0], $string)) {
                     $errors = $this->addError($errors, $fieldName, 'Invalid input!');
+                } else if ($record[$fieldName] === 'default') {
+                    $errors = $this->addError($errors, $fieldName, 'You must select your country!');
                 }
 
             } else if (str_contains($rule, 'maxlength')) {
-                preg_match('/(?<=maxlength:)(\d+)(?=\|)/U', $rule, $matches,PREG_OFFSET_CAPTURE);
+                preg_match('/(?<=maxlength:)(\d+)(?=\|)/U', $rule, $matches, PREG_OFFSET_CAPTURE);
                 if (strlen($matches[0][0]) > $rule['max']) {
                     $errors = $this->addError($errors, $fieldName, "Input length should be maximum {$matches[0][0]} symbols!");
                 }
@@ -67,7 +69,7 @@ class Model
                 }
 
             } else if (str_contains($rule, 'emailFormat') && filter_var($record[$fieldName], FILTER_VALIDATE_EMAIL) === false) {
-                $errors = $this->addError($errors, $fieldName,  'Incorrect email format!');
+                $errors = $this->addError($errors, $fieldName, 'Incorrect email format!');
 
 
             } else if (str_contains($rule, 'unique') && isset(Application::get('database')->searchInDB(
@@ -76,7 +78,7 @@ class Model
                         'where email=',
                         $record[$fieldName]
                     )[0])) {
-                $errors = $this->addError($errors, $fieldName,  'This email is already registered!');
+                $errors = $this->addError($errors, $fieldName, 'This email is already registered!');
 
             }
         }
