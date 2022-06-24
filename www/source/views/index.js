@@ -140,9 +140,6 @@ function sendData(n) {
     let file_data = $('#imgLoad').prop('files')[0];
     formData.append("photo", file_data);
     let result;
-    // if(formData.get('country') === null){
-    //     formData.append('data[country]', 'default');
-    // }
 
     for (let value of formData.entries()) {
         sessionStorage.setItem(value[0], value[1].toString());
