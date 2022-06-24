@@ -13,7 +13,7 @@ const countryList = document.querySelector('.country');
 fetch('https://restcountries.com/v3.1/all').then(res => {
     return res.json();
 }).then(data => {
-    let output = '<option selected disabled value="" hidden>Choose Country</option>`';
+    let output = '<option selected disabled value="default" hidden>Choose Country</option>`';
 
     data.sort((a, b) => (a.name.common > b.name.common) ? 1 : -1)
         .forEach(country => {
@@ -140,9 +140,6 @@ function sendData(n) {
     let file_data = $('#imgLoad').prop('files')[0];
     formData.append("photo", file_data);
     let result;
-    if(formData.get('country') === null){
-        formData.append('data[country]', 'default');
-    }
 
     for (let value of formData.entries()) {
         sessionStorage.setItem(value[0], value[1].toString());

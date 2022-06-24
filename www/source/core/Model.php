@@ -52,8 +52,6 @@ class Model
                 $string = $record[$fieldName];
                 if (!preg_match($matches[0][0], $string)) {
                     $errors = $this->addError($errors, $fieldName, 'Invalid input!');
-                } else if ($record[$fieldName] === 'default') {
-                    $errors = $this->addError($errors, $fieldName, 'You must select your country!');
                 }
 
             } else if (str_contains($rule, 'maxlength')) {
@@ -80,6 +78,10 @@ class Model
                     )[0])) {
                 $errors = $this->addError($errors, $fieldName, 'This email is already registered!');
 
+            } else if (str_contains($rule, 'country')) {
+                if (!isset($record[$fieldName])) {
+                    $errors = $this->addError($errors, $fieldName, 'Input is empty!');
+                }
             }
         }
         if (count($errors) === 0) {

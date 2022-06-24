@@ -13,7 +13,7 @@ class MembersModel extends Model
             'firstName' => 'required|invalid:/^[.\D]{1,}$/|length:30|',
             'lastName' => 'required|invalid:/^[.\D]{1,}$/|length:30|',
             'date' => 'required|length:255|date:2005-01-01|',
-            'country' => 'required|invalid:/default/|length:255|',
+            'country' => 'country|length:255|',
             'subject' => 'required|length:255|',
             'phone' => 'required|invalid:/\+\d \(\d{3}\) \d{3}-\d{4}/i|',
             'email' => 'required|length:255|emailFormat|unique|',
