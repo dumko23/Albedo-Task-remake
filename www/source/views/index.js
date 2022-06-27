@@ -193,13 +193,7 @@ function updateData(n) {
     // Tried to iterate through formData array using for .. of ..,
     // but it leads app to crush, sooo I left it like this for now
 
-    formData.append('data[firstName]', sessionStorage.getItem('data[firstName]'));
-    formData.append('data[lastName]', sessionStorage.getItem('data[lastName]'));
-    formData.append('data[subject]', sessionStorage.getItem('data[subject]'));
-    formData.append('data[date]', sessionStorage.getItem('data[date]'));
-    formData.append('data[phone]', sessionStorage.getItem('data[phone]'));
     formData.append('data[email]', sessionStorage.getItem('data[email]'));
-    formData.append('data[country]', sessionStorage.getItem('data[country]'));
 
     let fileUploaded = document.getElementById("imgLoad").files[0];
     if (fileUploaded) {
