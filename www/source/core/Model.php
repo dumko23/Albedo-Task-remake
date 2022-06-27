@@ -34,8 +34,12 @@ class Model
         return $errorList;
     }
 
-    public static function getData($select, $dbAndTable, $where = '', $searchedItem = '')
+    public static function getData($data, $where = '', $searchedItem = '')
     {
+        if ($data === 'members') {
+            $select = 'photo, firstName, lastName, email, subject';
+            $dbAndTable = Application::get('config')['database']['dbAndTable'];
+        }
         return Application::get('database')->getFromDB($select, $dbAndTable, $where, $searchedItem);
     }
 

@@ -82,4 +82,8 @@ class MembersModel extends Model
             return $result;
         }
     }
+
+    public static function showMembersData(){
+        return Model::getData('members');
+    }
 }
