@@ -190,7 +190,6 @@ function upload(formData, n) {
         data: formData,
         success: function (data) {
             if (data) {
-                console.log(data);
                 $('#imgLoad').addClass('invalid');
                 $('#fileWarning').html(data);
             } else {
@@ -203,7 +202,8 @@ function upload(formData, n) {
 
 function getCount() {
     $.get("get", function (data) {
-        $("#membersCount").html(data);
+        count = JSON.parse(data)
+        $("#membersCount").html(count['membersCount']);
     });
 }
 

@@ -54,4 +54,12 @@ class HandleController extends Controller
             return $result;
         }
     }
+
+    public function membersCount(): string
+    {
+        $data = MembersModel::showMembersData();
+        return json_encode([
+            'membersCount' => count($data),
+        ]);
+    }
 }

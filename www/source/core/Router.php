@@ -46,13 +46,13 @@ class Router
 
     protected function callAction($controller, $action)
     {
+        $controllerName = $controller;
         $controller = "App\app\controllers\\$controller";
         $controller = new $controller;
         if (!method_exists($controller, $action)) {
             throw new Exception("{$controller} does not respond to the {$action} action");
         }
-
-        if ($action === 'handleSend' || $action === 'handleUpdate') {
+        if ($controllerName === 'HandleController') {
             echo $controller->$action();
             exit();
         }

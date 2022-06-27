@@ -2,8 +2,6 @@
 
 namespace App\core;
 
-use App\app\views\MembersView;
-
 class Controller
 {
     public function returnPagePath($page): string

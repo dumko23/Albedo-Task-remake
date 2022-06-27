@@ -31,13 +31,13 @@ class PageController extends Controller
         return MembersModel::showMembersData();
     }
 
-    public function membersCount()
-    {
-        return [
-            'path' => $this->returnPagePath('membersCount'),
-            'data' => $this->showMembers(),
-        ];
-    }
+//    public function membersCount()
+//    {
+//        return [
+//            'path' => $this->returnPagePath('membersCount'),
+//            'data' => $this->showMembers(),
+//        ];
+//    }
 
     public function page404()
     {
