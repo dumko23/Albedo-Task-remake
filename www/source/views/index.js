@@ -24,45 +24,22 @@ fetch('https://restcountries.com/v3.1/all').then(res => {
     console.log(err.message)
 });
 
-let inputFirstName = document.getElementById('firstNameIsValid');
-inputFirstName.oninvalid = function (event) {
-    event.target.setCustomValidity("First Name should contain latin letters or '`- symbols and be maximum 30 symbols long.");
-}
-inputFirstName.oninput = function (event) {
-    event.target.setCustomValidity('');
-}
+let validityArray = [
+    ['firstNameIsValid', "First Name should contain latin letters or '`- symbols and be maximum 30 symbols long."],
+    ['lastNameIsValid', "Last Name should contain latin letters or ' symbol and be maximum 30 symbols long."],
+    ['phoneIsValid', "Phone number should contain 11 digits"],
+    ['emailIsValid', "Email should only contain latin letters, digits and @ symbol."],
+    ['dateIsValid', "Maximum available date is 01-01-2005"]
+]
 
-let inputLastName = document.getElementById('lastNameIsValid');
-inputLastName.oninvalid = function (event) {
-    event.target.setCustomValidity("Last Name should contain latin letters or ' symbol and be maximum 30 symbols long.");
-}
-inputLastName.oninput = function (event) {
-    event.target.setCustomValidity('');
-}
-
-let inputNumber = document.getElementById('phoneIsValid');
-inputNumber.oninvalid = function (event) {
-    event.target.setCustomValidity("Phone number should contain 11 digits");
-}
-inputNumber.oninput = function (event) {
-    event.target.setCustomValidity('');
-}
-
-let inputEmail = document.getElementById('emailIsValid');
-inputEmail.oninvalid = function (event) {
-    event.target.setCustomValidity("Email should only contain latin letters, digits and @ symbol.");
-}
-inputEmail.oninput = function (event) {
-    event.target.setCustomValidity('');
-}
-
-let inputDate = document.getElementById('dateIsValid');
-inputDate.oninvalid = function (event) {
-    event.target.setCustomValidity("Maximum available date is 01-01-2005");
-}
-inputDate.oninput = function (event) {
-    event.target.setCustomValidity('');
-}
+validityArray.forEach((item) => {
+    document.getElementById(item[0]).oninvalid = function (event) {
+        event.target.setCustomValidity(item[1]);
+    }
+    document.getElementById(item[0]).oninput = function (event) {
+        event.target.setCustomValidity('');
+    }
+})
 
 $(function () {
     $("#phoneIsValid").mask("+0 (000) 000-0000");
@@ -141,9 +118,7 @@ function sendData(n) {
     formData.append("photo", file_data);
     let result;
 
-    for (let value of formData.entries()) {
-        sessionStorage.setItem(value[0], value[1].toString());
-    }
+    sessionStorage.setItem('data[email]', formData.get('data[email]').toString());
 
     $.ajax({
         type: "POST",
@@ -189,10 +164,6 @@ function updateData(n) {
     let file_data = $('#imgLoad').prop('files')[0];
     formData.append("photo", file_data);
 
-    // Too much hard-code.
-    // Tried to iterate through formData array using for .. of ..,
-    // but it leads app to crush, sooo I left it like this for now
-
     formData.append('data[email]', sessionStorage.getItem('data[email]'));
 
     let fileUploaded = document.getElementById("imgLoad").files[0];
@@ -224,13 +195,7 @@ function upload(formData, n) {
                 $('#fileWarning').html(data);
             } else {
                 nextPrev(n);
-                sessionStorage.removeItem('data[firstName]');
-                sessionStorage.removeItem('data[lastName]');
-                sessionStorage.removeItem('data[subject]');
-                sessionStorage.removeItem('data[date]');
-                sessionStorage.removeItem('data[phone]');
                 sessionStorage.removeItem('data[email]');
-                sessionStorage.removeItem('data[country]');
             }
         }
     });
