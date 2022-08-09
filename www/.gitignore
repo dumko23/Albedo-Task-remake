@@ -6,3 +6,4 @@
 /vendor/
 source/vendor/
 .env
+/source/dist
